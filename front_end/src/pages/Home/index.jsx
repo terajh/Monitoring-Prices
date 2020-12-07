@@ -14,7 +14,7 @@ class Home extends React.Component {
         this.id = (this.props.maps) ? this.props.maps[5] : 0
     }
     componentDidMount() {
-        axios.get("http://localhost:3001/auth/session", 
+        axios.get("http://terajoo.tk:3001/auth/session", 
         { withCredentials: true })
         .then((res) => {
             console.log(res);

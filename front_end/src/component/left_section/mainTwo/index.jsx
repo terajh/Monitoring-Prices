@@ -26,13 +26,13 @@ class MainTwo extends React.Component {
     componentDidMount() {
         // if(this.state.road_address == '' && this.props.pnu[3] !== 0 && this.props.pnu[6] === 0) {
             document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-            axios.post('http://0.0.0.0:3001/api/get_extra',{
+            axios.post('http://terajoo.tk:3001/api/get_extra',{
                 pnu: this.props.pnu[3]
             }, { withCredentials: true })
             .then(response => {
                 let data = response.data;
                 
-                axios.post('http://0.0.0.0:3001/api/get_log',{
+                axios.post('http://terajoo.tk:3001/api/get_log',{
                     pnu: this.props.pnu[3],
                     area: data.items[0].area
                 }, { withCredentials: true })
@@ -72,7 +72,7 @@ class MainTwo extends React.Component {
         var itemValue = itemSelect.options[itemSelect.selectedIndex].value;
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
 
-        axios.post('http://0.0.0.0:3001/api/get_log',{
+        axios.post('http://terajoo.tk:3001/api/get_log',{
             pnu: this.props.pnu[3],
             area: itemValue
         }, { withCredentials: true })
@@ -90,7 +90,7 @@ class MainTwo extends React.Component {
 
     insertList() {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-        axios.post('http://0.0.0.0:3001/api/putLike',{
+        axios.post('http://terajoo.tk:3001/api/putLike',{
             pnu: this.props.pnu[3]
         }, { withCredentials: true })
         .then(res => {
@@ -104,7 +104,7 @@ class MainTwo extends React.Component {
     }
     removeList() {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-        axios.post('http://0.0.0.0:3001/api/removeLike',{
+        axios.post('http://terajoo.tk:3001/api/removeLike',{
             pnu: this.props.pnu[3]
         }, { withCredentials: true })
         .then(res => {

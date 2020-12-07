@@ -15,7 +15,7 @@ class DongBox extends React.Component {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
 
         document.getElementById('bottom_city_box_id').setAttribute('class','bottom_city_box');
-        axios.post('http://0.0.0.0:3001/api/get_list',{
+        axios.post('http://terajoo.tk:3001/api/get_list',{
             code: e.target.innerText,
             pnu: e.target.attributes[2].value
         }, { withCredentials: true })

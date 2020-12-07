@@ -36,7 +36,7 @@ class LoginForm extends React.Component {
   loginClickHandler = () => {
 
     const { email, password } = this.state;
-    axios.post("http://0.0.0.0:3001/auth/signin", {
+    axios.post("http://terajoo.tk:3001/auth/signin", {
       email: email,
       password: password
     }, { withCredentials: true })
@@ -59,7 +59,7 @@ class LoginForm extends React.Component {
   signupClickHandler = () => {
     document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
     const { email, password, address, name, nickname } = this.state;
-    axios.post("http://0.0.0.0:3001/auth/signup", {
+    axios.post("http://terajoo.tk:3001/auth/signup", {
       email: email,
       password: password,
       address: address,

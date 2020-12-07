@@ -51,7 +51,7 @@ class Header extends React.Component {
 
     logout = e => {
         e.preventDefault();
-        axios.get('http://0.0.0.0:3001/auth/logout', { withCredentials: true })
+        axios.get('http://terajoo.tk:3001/auth/logout', { withCredentials: true })
         .then(res => {
             console.log('logout res',res);
             if(res.data.success === true) {
@@ -71,7 +71,7 @@ class Header extends React.Component {
 
     showProfiles = (e) => {
         e.preventDefault();
-        axios.get('http://0.0.0.0:3001/api/getLike', { withCredentials: true })
+        axios.get('http://terajoo.tk:3001/api/getLike', { withCredentials: true })
         .then(res => {
             if(res.data.success === true) {
                 this.setState({

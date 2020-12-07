@@ -17,7 +17,7 @@ export default class HiddenBox extends React.Component {
     
     getgu = (e) => {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-        axios.post('http://0.0.0.0:3001/api/get_guname',
+        axios.post('http://terajoo.tk:3001/api/get_guname',
             {_cityname: e.target.innerText}, { withCredentials: true }
         )
         .then(response => {
@@ -31,7 +31,7 @@ export default class HiddenBox extends React.Component {
 
     getdong = (e) => {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-        axios.post('http://0.0.0.0:3001/api/get_dongname',
+        axios.post('http://terajoo.tk:3001/api/get_dongname',
             {_guname: e.target.innerText}, { withCredentials: true }
         )
         .then(response => {

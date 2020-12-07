@@ -10,7 +10,7 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 app.use(cors({
-    origin: 'http://0.0.0.0:3000',
+    origin: 'http://terajoo.tk:3000',
     credentials: true
 }));
 app.set('view engine', 'ejs')
