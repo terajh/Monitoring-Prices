@@ -10,7 +10,7 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 app.use(cors({
-    origin: 'http://terajoo.tk:3000',
+    origin: 'http://localhost:3000',
     credentials: true
 }));
 app.set('view engine', 'ejs')
@@ -60,6 +60,6 @@ app.use(function (err, req, res, next) {
 });
 
 
-app.listen(3001, '0.0.0.0',() => {
+app.listen(3001,() => {
     console.log('Nodejs server running on port 3001');
 })

@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const compression = require('compression');
 const db = require('../lib/db');
-const { Console } = require('console');
 
 
 router.use(compression());

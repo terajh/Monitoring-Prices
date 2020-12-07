@@ -4,6 +4,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {InputGroup, Button, FormControl} from 'react-bootstrap';
 import {updateDescriptionLists} from '../../../actions/state';
+import {getHost} from '../../../lib/host';
 
 class Comments extends React.Component {
 
@@ -46,7 +47,7 @@ class Comments extends React.Component {
             return;
         }
         else{
-            axios.post('http://terajoo.tk:3001/api/input_comment', 
+            axios.post(getHost()+'/api/input_comment', 
                 {
                     description : this.state.description,
                     pnu : this.state.pnu,

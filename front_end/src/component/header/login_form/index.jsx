@@ -5,7 +5,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { loginSession, toggleMain, setModal, updateLoc} from '../../../actions/state';
 import { InputGroup, FormControl, Card, Jumbotron } from 'react-bootstrap'
-
+import {getHost} from '../../../lib/host';
 axios.default.withCredentials = true;
 
 class LoginForm extends React.Component {
@@ -36,7 +36,7 @@ class LoginForm extends React.Component {
   loginClickHandler = () => {
 
     const { email, password } = this.state;
-    axios.post("http://terajoo.tk:3001/auth/signin", {
+    axios.post(getHost()+"/auth/signin", {
       email: email,
       password: password
     }, { withCredentials: true })
@@ -48,6 +48,7 @@ class LoginForm extends React.Component {
           alert('로그인 성공');
           const { email, password } = this.state;
           this.props.setSession(email);
+          this.props.setModal('');
         }
       })
       .catch((err) => {
@@ -59,7 +60,7 @@ class LoginForm extends React.Component {
   signupClickHandler = () => {
     document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
     const { email, password, address, name, nickname } = this.state;
-    axios.post("http://terajoo.tk:3001/auth/signup", {
+    axios.post(getHost()+"/auth/signup", {
       email: email,
       password: password,
       address: address,
@@ -143,6 +144,7 @@ class LoginForm extends React.Component {
                   <FormControl
                     className="loginId"
                     placeholder="아이디"
+                    name="email"
                     aria-label="Userid"
                     aria-describedby="basic-addon1"
                     onChange={this.inputHandler}
@@ -155,6 +157,7 @@ class LoginForm extends React.Component {
                   <FormControl
                     className="loginPw"
                     placeholder="password"
+                    name="password"
                     type="password"
                     aria-label="password"
                     aria-describedby="basic-addon1"
@@ -168,6 +171,7 @@ class LoginForm extends React.Component {
                   <FormControl
                     className="loginId"
                     placeholder="이름"
+                    name="name"
                     aria-label="Username"
                     aria-describedby="basic-addon1"
                     onChange={this.inputHandler}
@@ -180,6 +184,7 @@ class LoginForm extends React.Component {
                   <FormControl
                     className="loginId"
                     placeholder="이름"
+                    name="nickname"
                     aria-label="nickname"
                     aria-describedby="basic-addon1"
                     onChange={this.inputHandler}
@@ -193,6 +198,7 @@ class LoginForm extends React.Component {
                     className="loginId"
                     placeholder="이메일"
                     aria-label="email"
+                    name="address"
                     aria-describedby="basic-addon1"
                     onChange={this.inputHandler}
                   />
