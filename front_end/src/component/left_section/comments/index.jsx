@@ -4,6 +4,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {InputGroup, Button, FormControl} from 'react-bootstrap';
 import {updateDescriptionLists} from '../../../actions/state';
+import {getHost} from '../../../lib/host';
 
 class Comments extends React.Component {
 
@@ -46,7 +47,7 @@ class Comments extends React.Component {
             return;
         }
         else{
-            axios.post('http://localhost:3001/api/input_comment', 
+            axios.post(getHost() + '/api/input_comment', 
                 {
                     description : this.state.description,
                     pnu : this.state.pnu,
@@ -59,8 +60,12 @@ class Comments extends React.Component {
                     alert('댓글을 다시 입력해주세요');
                 }else{
                     alert('댓글 입력 성공');
+                    
                 }
                 this.props.updateDescriptionLists(this.state.nickname, today.toLocaleString(), this.state.description);
+                this.setState({
+                    description:''
+                })
             })
             .catch(err => {
                 console.log(err);

@@ -156,7 +156,8 @@ router.post('/input_comment', (req, res) => {
     var description = req.body.description;
     var nickname = req.body.nickname;
     var dt = req.body.dt;
-    db.query(`insert into comments(userid, description, pnu, dt) values('${nickname}','${description}','${dt}')`, (err, results, field) => {
+    db.query(`insert into comments(userid, description, pnu, dt) values('${nickname}','${description}', '${pnu}','${dt}')`, (err, results, field) => {
+        console.log(err);
         if(err) {
             res.json({success: false});
         }

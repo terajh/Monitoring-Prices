@@ -5,6 +5,7 @@ import './style.css';
 import {logoutSession, setLike, loginSession, setModal, toggleMain} from '../../actions/state';
 import axios from 'axios';
 import LoginForm from './login_form';
+import {getHost} from '../../lib/host';
 
 axios.default.withCredentials = true;
 
@@ -47,11 +48,12 @@ class Header extends React.Component {
         this.setState({
             isModalOpen: 'signup'
         });
+        this.props.setModal('signup');
     }
 
     logout = e => {
         e.preventDefault();
-        axios.get('http://localhost:3001/auth/logout', { withCredentials: true })
+        axios.get(getHost()+'/auth/logout', { withCredentials: true })
         .then(res => {
             console.log('logout res',res);
             if(res.data.success === true) {
@@ -71,7 +73,7 @@ class Header extends React.Component {
 
     showProfiles = (e) => {
         e.preventDefault();
-        axios.get('http://localhost:3001/api/getLike', { withCredentials: true })
+        axios.get(getHost()+'/api/getLike', { withCredentials: true })
         .then(res => {
             if(res.data.success === true) {
                 this.setState({
