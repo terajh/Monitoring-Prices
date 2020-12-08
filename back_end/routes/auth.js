@@ -1,10 +1,8 @@
 const express = require('express');
 var router = express.Router();
 const bodyParser = require('body-parser');
-const path = require('path');
 const compression = require('compression');
 const db = require('../lib/db');
-const { Console } = require('console');
 
 
 router.use(compression());
@@ -15,17 +13,17 @@ module.exports = (passport) => {
     router.get('/session', (req, res) => {
         console.log('get auth',req.session.passport);
         if(req.session.passport.user === undefined) {
-            res.status(200).send({success:false});
+            res.send({success:false});
         }
         else {
-            res.status(200).send({success:true, data:req.session.passport.user});
+            res.send({success:true, data:req.session.passport.user});
         }
     });
 
     router.post('/signin', passport.authenticate('local'),
         (req, res) => {
-            console.log('get signin');
-            res.send({status:true});
+            console.log('get signin', req.session.passport);
+            res.send({status:true, nickname:req.session.passport.user});
         }
     );
     router.get('/logout', (req, res) => {
@@ -48,8 +46,7 @@ module.exports = (passport) => {
             }
             else{
                 db.query(`insert into user(userid, userpw, address, username, nickname ) values ('${email}', '${password}', '${address}', '${name}', '${nickname}');`, (err, results, field) => {
-                    console.log(err);
-			res.send({ success: true});
+                    res.send({ success: true});
                 });
             }
         })

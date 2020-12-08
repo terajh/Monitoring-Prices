@@ -53,8 +53,7 @@ class LoginForm extends React.Component {
 	  this.props.setModal('');
         } else {
           alert('로그인 성공');
-          const { email, password } = this.state;
-          this.props.setSession(email);
+          this.props.setSession(res.data.nickname);
           this.props.setModal('');
         }
       })
