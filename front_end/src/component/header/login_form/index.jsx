@@ -80,21 +80,17 @@ class LoginForm extends React.Component {
       .then((res) => {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
         if (res.data.success === false) {
-	  alert('회원가입 에러');
+          alert(res.data.message);
           this.props.close();
           this.props.setModal('');
         } else {
-
-          //this.props.gotoSignin();
-	  this.props.setModal('signin');
-	 
+          alert('회원가입 완료되었습니다.')
+          this.props.gotoSignin();
         }
         // 회원가입 했으니까 로그인 화면으로 가기
       })
       .catch((err) => {
         console.log(err)
-	alert('회원가입 에러');
-	this.props.setModal('')
       });
   };
 

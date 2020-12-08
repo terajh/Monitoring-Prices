@@ -1,8 +1,10 @@
 const express = require('express');
 var router = express.Router();
 const bodyParser = require('body-parser');
+const path = require('path');
 const compression = require('compression');
 const db = require('../lib/db');
+const { Console } = require('console');
 
 
 router.use(compression());
@@ -13,10 +15,10 @@ module.exports = (passport) => {
     router.get('/session', (req, res) => {
         console.log('get auth',req.session.passport);
         if(req.session.passport.user === undefined) {
-            res.send({success:false});
+            res.status(200).send({success:false});
         }
         else {
-            res.send({success:true, data:req.session.passport.user});
+            res.status(200).send({success:true, data:req.session.passport.user});
         }
     });
 
@@ -42,12 +44,19 @@ module.exports = (passport) => {
 
         db.query(`select * from user where userid='${email}'`, (err, results, field) => {
             if(results.length != 0) {
-                res.send({success: false});
+                res.send({success: false, message:'이미 존재하는 아이디입니다.'});
             }
             else{
-                db.query(`insert into user(userid, userpw, address, username, nickname ) values ('${email}', '${password}', '${address}', '${name}', '${nickname}');`, (err, results, field) => {
-                    res.send({ success: true});
-                });
+                db.query(`select * from user where nickname='${nickname}'`, (err, results, field) => {
+                    if(results.length != 0) {
+                        res.send({success: false, message:'이미 존재하는 닉네임입니다.'});
+                    }
+                    else{
+                        db.query(`insert into user(userid, userpw, address, username, nickname ) values ('${email}', '${password}', '${address}', '${name}', '${nickname}');`, (err, results, field) => {
+                            res.send({ success: true});
+                        });
+                    }
+                })
             }
         })
                 
