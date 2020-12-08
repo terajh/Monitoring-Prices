@@ -53,6 +53,7 @@ class Header extends React.Component {
 
     logout = e => {
         e.preventDefault();
+        console.log('logout!!!')
         axios.get(getHost()+'/auth/logout', { withCredentials: true })
         .then(res => {
             if(res.data.success === true) {

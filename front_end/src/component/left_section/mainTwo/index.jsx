@@ -2,7 +2,7 @@ import React from 'react';
 import './style.css'
 import axios from 'axios';
 import {connect} from 'react-redux'
-import {updatePniInfo, setLike, toggleMain,setModal} from '../../../actions/state';
+import {updatePniInfo, setLike, toggleMain,setModal, updateMod} from '../../../actions/state';
 import {getHost} from '../../../lib/host';
 
 axios.default.withCredentials = true;
@@ -97,14 +97,13 @@ class MainTwo extends React.Component {
             pnu: this.props.pnu[3]
         }, { withCredentials: true })
         .then(res => {
+            console.log('wowwow',res.data);
             if (res.data.success === true) {
-                console.log(res.data);
                 document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
                 alert('찜목록에 추가되었습니다. 목록화면으로 돌아갑니다.');
-                this.props.pnu[8] = res.data.pnu;
                 this.props.setLike(res.data.pnu);
-                this.props.toggleMain(0);
                 this.props.setModal('profile');
+                this.props.toggleMain(0);
             }
             else {
                 alert('찜목록에 추가하지 못했습니다. 다시 시도해주세요.')
@@ -248,6 +247,8 @@ const mapDispatchToProps = dispatch => {
         },
         setModal: function(mode){
             dispatch(setModal(mode));
+        },update_to: function(list, pnulist){
+            dispatch(updateMod(list, pnulist));
         }
 
     }

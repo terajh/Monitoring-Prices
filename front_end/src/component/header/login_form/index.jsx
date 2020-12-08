@@ -46,7 +46,11 @@ class LoginForm extends React.Component {
       .then((res) => {
         if (res.data.success === false) {
           alert('로그인에 실패했습니다. 다시 시도해 주세요');
-          this.props.gotoSignin();
+          this.setState({
+            email:'',
+            password:''
+          })
+          this.props.setModal('');
         } else {
           alert('로그인 성공');
           const { email, password } = this.state;
@@ -56,7 +60,11 @@ class LoginForm extends React.Component {
       })
       .catch((err) => {
         alert('로그인에 실패했습니다. 다시 시도해 주세요');
-        this.props.gotoSignin();
+        this.setState({
+          email:'',
+          password:''
+        })
+        this.props.setModal('');
       })
   };
 
@@ -77,8 +85,8 @@ class LoginForm extends React.Component {
           this.props.setModal('signin');
         } else {
           this.props.gotoSignin();
+          // 회원가입 했으니까 로그인 화면으로 가기
         }
-        // 회원가입 했으니까 로그인 화면으로 가기
       })
       .catch((err) => {
         console.log(err)
@@ -106,6 +114,7 @@ class LoginForm extends React.Component {
                   className="loginId"
                   type="text"
                   placeholder="아이디"
+                  value={this.state.email}
                   onChange={this.inputHandler}
                 />
                 <input
@@ -113,6 +122,7 @@ class LoginForm extends React.Component {
                   className="loginPw"
                   type="password"
                   placeholder="비밀번호"
+                  value={this.state.password}
                   onChange={this.inputHandler}
                 />
                 <button className="loginBtn" onClick={this.loginClickHandler}>
