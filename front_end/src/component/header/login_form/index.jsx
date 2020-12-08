@@ -231,7 +231,6 @@ class LoginForm extends React.Component {
         </div>
       )
     } else if (this.props.list[9] == 'profile') {
-      console.log('profile', this.props.list);
       var _list = this.props.list[8].filter((x) => x.user === this.props.list[5]);
       return (
         <div className="modal" style={{ 'display': 'block' }}>

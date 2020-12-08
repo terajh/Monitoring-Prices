@@ -156,7 +156,8 @@ router.post('/input_comment', (req, res) => {
     var description = req.body.description;
     var nickname = req.body.nickname;
     var dt = req.body.dt;
-    db.query(`insert into comments(userid, description, pnu, dt) values('${nickname}','${description}','${pnu}','${dt}')`, (err, results, field) => {
+    db.query(`insert into comments(userid, description, pnu, dt) values('${nickname}','${description}', '${pnu}','${dt}')`, (err, results, field) => {
+        console.log(err);
         if(err) {
             res.json({success: false});
         }
@@ -190,15 +191,25 @@ router.post('/putLike', (req, res) => {
     var pnu = req.body.pnu;
     console.log(nickname, pnu)
     db.query(`select * from userLike where user='${nickname}' and pnu='${pnu}'`, (err, results, field) => {
-        console.log(results);
         if(err) {
             res.json({success: false});
         }
         else{
             if(results.length !== 0){
-                res.json({success: true});
+                db.query(`select _name, apart.pnu, address, userLike.user from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
+                    if(err) {
+                        res.json({success: false});
+                    }
+                    else{
+                        res.json({
+                            success:true,
+                            pnu:results
+                        });
+                    }
+                });
             }else{
                 db.query(`insert into userLike(user, pnu) values('${nickname}', '${pnu}')`, (err, results, field) => {
+                    console.log(results)
                     if(err) {
                         res.json({success: false});
                     }

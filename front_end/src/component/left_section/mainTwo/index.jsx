@@ -98,10 +98,8 @@ class MainTwo extends React.Component {
         }, { withCredentials: true })
         .then(res => {
             if (res.data.success === true) {
-                console.log(res.data);
                 document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
                 alert('찜목록에 추가되었습니다. 목록화면으로 돌아갑니다.');
-                this.props.pnu[8] = res.data.pnu;
                 this.props.setLike(res.data.pnu);
                 this.props.toggleMain(0);
                 this.props.setModal('profile');
