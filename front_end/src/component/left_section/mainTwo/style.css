@@ -32,6 +32,10 @@
     font-size: 14px;
 }
 
+.marker_info .marker_info_txt svg {
+    color:#1e0e24;
+}
+
 .marker_address_number {
     font-size: 14px;
     color: #999;

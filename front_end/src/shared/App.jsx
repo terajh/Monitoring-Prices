@@ -8,9 +8,6 @@ class App extends React.Component {
     return(
       <div className="all">
         <Route exact path="/" component={Home} />
-        <Switch>
-          <Route path="/auth" component={Login} />
-        </Switch>
       </div>
     );
   }

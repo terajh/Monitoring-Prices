@@ -12,8 +12,8 @@ const NaverMapAPI = (props) => {
     const [[xLoc, yLoc, modify], setstate] = useState([37.3595704, 127.105399, 0])
 
     useEffect(()=>{
-        if(props.pnu[6][0] != undefined && modify === 0 && xLoc != props.pnu[6][0]){
-            console.log(props.pnu[6][0], props.pnu[6][1])
+        if(props.pnu[6] === 0) return;
+        else if(props.pnu[6][0] != xLoc && yLoc != props.pnu[6][1]){
             setstate([props.pnu[6][0], props.pnu[6][1], 1]);
         }
     })

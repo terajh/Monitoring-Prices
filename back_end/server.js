@@ -8,9 +8,9 @@ const bodyParser = require('body-parser');
 
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
-
+const getHost = require('./lib/host');
 app.use(cors({
-    origin: 'http://terajoo.tk:3000',
+    origin: getHost(),
     credentials: true
 }));
 app.set('view engine', 'ejs')
