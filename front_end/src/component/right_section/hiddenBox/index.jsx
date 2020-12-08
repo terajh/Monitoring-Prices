@@ -4,6 +4,7 @@ import axios from 'axios';
 import CityBox from './cityBox';
 import GuBox from './guBox';
 import DongBox from './dongBox';
+import {getHost} from '../../../lib/host';
 // import { Container, Row, Col } from "react-bootstrap";
 
 axios.default.withCredentials = true;
@@ -17,7 +18,7 @@ export default class HiddenBox extends React.Component {
     
     getgu = (e) => {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-        axios.post('http://localhost:3001/api/get_guname',
+        axios.post(getHost()+'/api/get_guname',
             {_cityname: e.target.innerText}, { withCredentials: true }
         )
         .then(response => {
@@ -31,7 +32,7 @@ export default class HiddenBox extends React.Component {
 
     getdong = (e) => {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-        axios.post('http://localhost:3001/api/get_dongname',
+        axios.post(getHost()+'/api/get_dongname',
             {_guname: e.target.innerText}, { withCredentials: true }
         )
         .then(response => {

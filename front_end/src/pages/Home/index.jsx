@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import {Spinner} from 'react-bootstrap';
 import {loginSession} from '../../actions/state'
 import axios from 'axios';
+import {getHost} from '../../lib/host'
 
 class Home extends React.Component {
     constructor(props) {
@@ -14,10 +15,9 @@ class Home extends React.Component {
         this.id = (this.props.maps) ? this.props.maps[5] : 0
     }
     componentDidMount() {
-        axios.get("http://localhost:3001/auth/session", 
+        axios.get(getHost()+"/auth/session", 
         { withCredentials: true })
         .then((res) => {
-            console.log(res);
             if (res.data.success === true) {
                 this.props.setSession(res.data.data);
             } 

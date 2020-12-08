@@ -3,6 +3,7 @@ import './style.css'
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {updateMod, toggleMain} from '../../../../actions/state';
+import {getHost} from '../../../../lib/host'
 
 
 class DongBox extends React.Component {
@@ -15,7 +16,7 @@ class DongBox extends React.Component {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
 
         document.getElementById('bottom_city_box_id').setAttribute('class','bottom_city_box');
-        axios.post('http://localhost:3001/api/get_list',{
+        axios.post(getHost()+'/api/get_list',{
             code: e.target.innerText,
             pnu: e.target.attributes[2].value
         }, { withCredentials: true })

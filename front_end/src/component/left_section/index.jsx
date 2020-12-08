@@ -9,11 +9,20 @@ class Left_section extends React.Component {
 
     constructor(props){
         super(props);
+        this.state = {
+            pnu: '',
+        }
         this.check_mod = this.check_mod.bind(this);
     }
-
+    componentDidMount() {
+        if(this.state.pnu !== this.props.mod[4]) {
+            this.setState({
+                pnu:this.props.mod[4]
+            });
+        }
+    }
     check_mod = () => {
-        if(this.props.mod === 0){
+        if(this.props.mod[4] === 0){
             return <div id="left_body"><MainOne></MainOne></div>
         }
         else {
@@ -32,7 +41,7 @@ class Left_section extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        mod: state.maps[4]
+        mod: state.maps
     }
 }
 export default connect(mapStateToProps, null)(Left_section);

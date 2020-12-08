@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./style.css";
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { loginSession, toggleMain, setModal, updateLoc} from '../../../actions/state';
+import { loginSession, toggleMain, setModal, updateLoc, gotoProfile} from '../../../actions/state';
 import { InputGroup, FormControl, Card, Jumbotron } from 'react-bootstrap'
 import {getHost} from '../../../lib/host';
 axios.default.withCredentials = true;
@@ -24,7 +24,10 @@ class LoginForm extends React.Component {
     this.getContent = this.getContent.bind(this);
   }
   componentDidMount() {
-    console.log(this.props.is)
+    if (this.props.list[9] == 'profile') {
+      this.props.toggleMain();
+      
+    }
   }
 
   inputHandler = (e = []) => {
@@ -84,10 +87,8 @@ class LoginForm extends React.Component {
 
   toggleTwo = e => {
     e.preventDefault();
-    console.log(e.target.attributes[2].value);
-    this.props.updateLoc(e.target.attributes[2].value);
-    this.props.toggleMain();
     this.props.setModal('');
+    this.props.gotoProfile(1,e.target.attributes[2].value);
   }
 
   getContent = () => {
@@ -214,18 +215,20 @@ class LoginForm extends React.Component {
         </div>
       )
     } else if (this.props.list[9] == 'profile') {
+      console.log('profile', this.props.list);
+      var _list = this.props.list[8].filter((x) => x.user === this.props.list[5]);
       return (
         <div className="modal" style={{ 'display': 'block' }}>
           <div>
             <Jumbotron className="listModal">
               <span className="close" onClick={this.props.close} style={{ "cursor": "pointer" }}>
                 &times;
-              </span>
+                      </span>
               <h1>찜 목록 리스트</h1>
               <p>
                 찜 목록 리스트입니다. 원하는 목록을 클릭해 가격을 확인해보세요.
-              </p>
-              {this.props.list[8].map((item, i) => {
+                      </p>
+              {_list.map((item, i) => {
                 return (
                   <Card className="card_bodys" key={i} style={{ width: '18rem' }}>
                     <Card.Body>
@@ -238,17 +241,19 @@ class LoginForm extends React.Component {
                   </Card>
                 )
               })}
-              
+
             </Jumbotron>
           </div>
         </div>
       )
+
+
+      
     } else {
       return null;
     }
   }
   render() { //아까 버튼에서 props로 가져온것
-    console.log('login form', this.props.isOpen)
     return (
       <>
         {this.getContent()}
@@ -270,11 +275,14 @@ const mapDispatchToProps = dispatch => {
     setSession: function (session) {
       dispatch(loginSession(session));
     },
-    toggleMain: function () {
-      dispatch(toggleMain())
+    toggleMain: function (a) {
+      dispatch(toggleMain(a))
     },
     setModal: function(mode){
         dispatch(setModal(mode));
+    },
+    gotoProfile: function(mod, pnu){
+      dispatch(gotoProfile(mod, pnu));
     }
   }
 }

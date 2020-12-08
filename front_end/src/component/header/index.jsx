@@ -55,7 +55,6 @@ class Header extends React.Component {
         e.preventDefault();
         axios.get(getHost()+'/auth/logout', { withCredentials: true })
         .then(res => {
-            console.log('logout res',res);
             if(res.data.success === true) {
                 this.props.logout();
                 this.setState({
@@ -72,14 +71,19 @@ class Header extends React.Component {
     }
 
     showProfiles = (e) => {
-        e.preventDefault();
+        e.preventDefault();        
+        document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
+
         axios.get(getHost()+'/api/getLike', { withCredentials: true })
         .then(res => {
             if(res.data.success === true) {
+            document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
+
                 this.setState({
                     isModalOpen:'profile'
                 });
                 this.props.setLike(res.data.pnu);
+                this.props.toggleMain(0);
                 this.props.setModal('profile');
             }else{
             }
@@ -89,7 +93,6 @@ class Header extends React.Component {
         })
     }
     render() {
-        console.log(this.props.id)
         return (
             <header>
                 <Navbar id="nav" variant="dark">
@@ -157,7 +160,9 @@ const mapDispatchToProps = dispatch => {
         },
         setModal: function(mode){
             dispatch(setModal(mode));
-        }
+        },toggleMain: function (a) {
+            dispatch(toggleMain(a))
+          }
     }
 }
 

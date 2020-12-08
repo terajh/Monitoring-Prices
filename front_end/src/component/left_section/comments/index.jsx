@@ -31,7 +31,6 @@ class Comments extends React.Component {
     }
 
     inputChange = (e) => {
-        console.log(e);
         this.setState({
             description : e.target.value
         });
@@ -74,7 +73,6 @@ class Comments extends React.Component {
     }
 
     render() {
-        console.log('in comment', this.props.pnu)
         var des_list = this.props.pnu[7];
         return (
             <div id="comments_block">

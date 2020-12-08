@@ -2,12 +2,12 @@ import React from 'react';
 import './style.css'
 import axios from 'axios';
 import {connect} from 'react-redux'
-import {updatePniInfo, setLike} from '../../../actions/state';
+import {updatePniInfo, setLike, toggleMain,setModal} from '../../../actions/state';
+import {getHost} from '../../../lib/host';
 
 axios.default.withCredentials = true;
 
 class MainTwo extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -16,7 +16,9 @@ class MainTwo extends React.Component {
             name:'',
             arealist:[],
             loglist:[],
-            this_area:0
+            this_area:0,
+            pnu:'',
+            islike:0
         }
         this.updateThisArea = this.updateThisArea.bind(this);
         this.removeList = this.removeList.bind(this);
@@ -26,13 +28,13 @@ class MainTwo extends React.Component {
     componentDidMount() {
         // if(this.state.road_address == '' && this.props.pnu[3] !== 0 && this.props.pnu[6] === 0) {
             document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-            axios.post('http://localhost:3001/api/get_extra',{
+            axios.post(getHost()+'/api/get_extra',{
                 pnu: this.props.pnu[3]
             }, { withCredentials: true })
             .then(response => {
                 let data = response.data;
                 
-                axios.post('http://localhost:3001/api/get_log',{
+                axios.post(getHost()+'/api/get_log',{
                     pnu: this.props.pnu[3],
                     area: data.items[0].area
                 }, { withCredentials: true })
@@ -44,7 +46,8 @@ class MainTwo extends React.Component {
                         name : data.name,
                         arealist: data.items,
                         loglist: res.data.loglist,
-                        this_area: data.items[0].area
+                        this_area: data.items[0].area,
+                        
                     })
                     this.props.updatePniInfo(data.xLoc, data.yLoc, data.description);
                 })
@@ -64,7 +67,7 @@ class MainTwo extends React.Component {
         var auk = parseInt(number/100000000);
         var manwow = parseInt((number%100000000)/10000);
 
-        return auk +'억 '+ manwow+'만'
+        return ((auk !== 0) ? auk +'억 '+ manwow+'만' : manwow+'만')
     }
     updateThisArea = (e) => {
         e.preventDefault();
@@ -72,7 +75,7 @@ class MainTwo extends React.Component {
         var itemValue = itemSelect.options[itemSelect.selectedIndex].value;
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
 
-        axios.post('http://localhost:3001/api/get_log',{
+        axios.post(getHost()+'/api/get_log',{
             pnu: this.props.pnu[3],
             area: itemValue
         }, { withCredentials: true })
@@ -90,13 +93,23 @@ class MainTwo extends React.Component {
 
     insertList() {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-        axios.post('http://localhost:3001/api/putLike',{
+        axios.post(getHost()+'/api/putLike',{
             pnu: this.props.pnu[3]
         }, { withCredentials: true })
         .then(res => {
-            document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
-            this.props.pnu[8].push(this.props.pnu[3]);
-            this.props.setLike(this.props.pnu[8]);
+            if (res.data.success === true) {
+                console.log(res.data);
+                document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
+                alert('찜목록에 추가되었습니다. 목록화면으로 돌아갑니다.');
+                this.props.pnu[8] = res.data.pnu;
+                this.props.setLike(res.data.pnu);
+                this.props.toggleMain(0);
+                this.props.setModal('profile');
+            }
+            else {
+                alert('찜목록에 추가하지 못했습니다. 다시 시도해주세요.')
+            }
+
         })
         .catch(err => {
             console.log(err);
@@ -104,31 +117,37 @@ class MainTwo extends React.Component {
     }
     removeList() {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-        axios.post('http://localhost:3001/api/removeLike',{
+        axios.post(getHost()+'/api/removeLike',{
             pnu: this.props.pnu[3]
         }, { withCredentials: true })
         .then(res => {
             document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
-            this.props.setLike(this.props.pnu[8].filter((x)=>x!==this.props.pnu[3]));
+            this.props.setLike(this.props.pnu[8].filter((x)=>x.pnu!==this.props.pnu[3]));
+            alert('찜목록에서 삭제되었습니다.')
+            this.setState({
+                islike:0
+            })
         })
         .catch(err => {
             console.log(err);
         })
     }
     render() {
-        console.log('mainTwo component',this.props.pnu)
+        console.log(this.props.pnu)
         return (
             <>
                 <div className="marker_info vis">
                     <div className="marker_info_txt">
                         <strong className="marker_title" id="view_danzi">{this.state.name}</strong>
-                        {(this.props.pnu[5] === 0) ? null : (this.props.pnu[8].includes(this.props.pnu[3])) ? 
-                            <svg onClick={this.removeList} style={{'float':'right', 'cursor':'pointer'}} width="20" height="20" viewBox="0 0 16 16" className="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                            </svg> 
-                            : <svg onClick={this.insertList} style={{'float':'right', 'cursor':'pointer'}} width="20" height="20" viewBox="0 0 16 16" className="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fillRule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-                            </svg>}
+                        {(this.props.pnu[5] === 0) ? null : (this.props.pnu[8].filter((item) => item.pnu === this.props.pnu[3]).length !== 0) ?
+                            <svg onClick={this.removeList} style={{ 'float': 'right', 'cursor': 'pointer' }} width="20" height="20" viewBox="0 0 16 16" className="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            :
+                            <svg onClick={this.insertList} style={{ 'float': 'right', 'cursor': 'pointer' }} width="20" height="20" viewBox="0 0 16 16" className="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                            </svg>
+                        }
                         <span className="marker_address" id="view_addr">{this.state.address_name}</span><br />
                         <div className="marker_address_number">
                             <em>도로명  </em>
@@ -223,6 +242,12 @@ const mapDispatchToProps = dispatch => {
         },
         setLike : function(list){
             dispatch(setLike(list));
+        },
+        toggleMain: function (a) {
+            dispatch(toggleMain(a));
+        },
+        setModal: function(mode){
+            dispatch(setModal(mode));
         }
 
     }
