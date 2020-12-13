@@ -3,10 +3,10 @@ const getHost = require('../../back_end/lib/host');
 module.exports = function(app) {
     app.use(
         proxy('/api', {
-            target: 'http://localhost:3001/'
+            target: getHost()
         }),
         proxy('/auth', {
-            target: 'http://localhost:3001/'
+            target: getHost()
         })
     )
 }
