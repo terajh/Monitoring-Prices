@@ -186,6 +186,24 @@ router.put('/input_comment', (req, res) => {
     });
 })
 
+router.post('/remove_comment', (req, res) => {
+    console.log('remove comment', req.body);
+    var nickname = req.body.nickname;
+    var dt = req.body.dt;
+    console.log(nickname, dt);
+    db.query(`delete from comments where userid = '${nickname}' and dt = '${dt}'`, (err, results, field) => {
+        console.log(err, results);
+        if (err) {
+            res.json({ success: false });
+        }
+        else {
+            res.json({
+                success: true
+            });
+        }
+    });
+})
+
 router.get('/getLike', (req, res) => {
     try {
         console.log('getlike', req.session.passport);

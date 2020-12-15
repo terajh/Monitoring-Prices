@@ -43,6 +43,7 @@ export const updateDescriptionLists = (nickname, dt, description) => ({
   description: description
 })
 
+
 export const setLike = (likeList) => ({
   type: 'INSERT_LIKE',
   list:likeList

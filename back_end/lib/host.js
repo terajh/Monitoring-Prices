@@ -4,7 +4,7 @@ const host = 'http://localhost:3001'
 const destrib_host = 'http://terajoo.tk:3001'
 
 const getHost = (n) => {
-    return destrib_host;
+    return host;
 }
 
 module.exports = getHost;

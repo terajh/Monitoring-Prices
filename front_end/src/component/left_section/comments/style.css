@@ -34,8 +34,8 @@ ol#comment_list>li div.comment_content {
 ol#comment_list>li div.buttons {
     display: none;
     position: absolute;
-    right: 25px;
-    top: 20px;
+    right: 25px;    
+    top: 55px;
     color: #ddd;
 }
 #comment_des {

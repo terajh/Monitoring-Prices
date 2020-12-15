@@ -70,6 +70,27 @@ class Comments extends React.Component {
         }
     }
 
+    removeComment = (e) => {
+        console.log('remove click',e);
+        var id = e.target.attributes['2'].value;
+        var dt = e.target.attributes['1'].value
+
+        axios.post(getHost()+'/api/remove_comment', 
+        {
+            nickname : id,
+            dt : dt
+        },
+        { withCredentials: true })
+        .then(res => {
+            if(res.data.success === false) {
+                alert('댓글 삭제 실패');
+            }else{
+                alert('댓글 삭제 성공');
+                e.target.parentNode.parentNode.parentNode.removeChild(e.target.parentNode.parentNode);
+            }
+        })
+    }
+
     render() {
         var des_list = this.props.pnu[7];
         return (
@@ -95,9 +116,12 @@ class Comments extends React.Component {
                                         <time style={{ 'float': 'right' }}>{item.dt}</time>
                                     </div>
                                     <div className="comment_content">{item.description} <br /></div>
-                                    <div className="buttons">
-                                        <a className="icon block reply" href="#"><span className="ico ico_reply"></span> 수정</a>
-                                    </div>
+                                    {(item.userid === this.props.pnu[5]) ? <div className="buttons" style={{'display':'block'}}>
+                                        <a className="icon block reply" dt={item.dt} id={item.userid} href="#" onClick={this.removeComment}><span className="ico ico_reply" ></span> 삭제</a>
+                                    </div>:<div className="buttons">
+                                        <a className="icon block reply" href="#"><span className="ico ico_reply"></span> 삭제</a>
+                                    </div>}
+                                    
                                 </li>
                             )
                         })}

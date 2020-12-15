@@ -11,6 +11,8 @@
     "bootstrap-icons": "^1.1.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
+    "enzyme": "^3.11.0",
+    "enzyme-to-json": "^3.6.1",
     "http-proxy-middleware": "^1.0.6",
     "mysql": "^2.18.1",
     "react": "^17.0.1",
@@ -50,6 +52,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
     ]
   }
 }

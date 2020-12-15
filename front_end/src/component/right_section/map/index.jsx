@@ -46,7 +46,6 @@ const Map = (props) => {
             loading={<p>Maps Loading...</p>}
             >
             <NaverMapAPI pnu={props.pnu} ></NaverMapAPI>
-            <Title></Title> 
         </RenderAfterNavermapsLoaded> 
     )
 }

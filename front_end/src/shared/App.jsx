@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return(
       <div className="all">
-        <Route exact path="/" component={Home} />
+        <Home></Home>
       </div>
     );
   }
