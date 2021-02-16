@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Monitoring-Prices/static/css/main.b74d77e8.chunk.css",
-    "main.js": "/Monitoring-Prices/static/js/main.dd7027a2.chunk.js",
-    "main.js.map": "/Monitoring-Prices/static/js/main.dd7027a2.chunk.js.map",
+    "main.js": "/Monitoring-Prices/static/js/main.ccdfaa66.chunk.js",
+    "main.js.map": "/Monitoring-Prices/static/js/main.ccdfaa66.chunk.js.map",
     "runtime-main.js": "/Monitoring-Prices/static/js/runtime-main.a3550d1f.js",
     "runtime-main.js.map": "/Monitoring-Prices/static/js/runtime-main.a3550d1f.js.map",
     "static/css/2.20aa2d7b.chunk.css": "/Monitoring-Prices/static/css/2.20aa2d7b.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.20aa2d7b.chunk.css",
     "static/js/2.4b1bfc35.chunk.js",
     "static/css/main.b74d77e8.chunk.css",
-    "static/js/main.dd7027a2.chunk.js"
+    "static/js/main.ccdfaa66.chunk.js"
   ]
 }
