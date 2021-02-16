@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Monitoring-Prices/static/css/main.b74d77e8.chunk.css",
+    "main.js": "/Monitoring-Prices/static/js/main.36989793.chunk.js",
+    "main.js.map": "/Monitoring-Prices/static/js/main.36989793.chunk.js.map",
+    "runtime-main.js": "/Monitoring-Prices/static/js/runtime-main.a3550d1f.js",
+    "runtime-main.js.map": "/Monitoring-Prices/static/js/runtime-main.a3550d1f.js.map",
+    "static/css/2.20aa2d7b.chunk.css": "/Monitoring-Prices/static/css/2.20aa2d7b.chunk.css",
+    "static/js/2.4b1bfc35.chunk.js": "/Monitoring-Prices/static/js/2.4b1bfc35.chunk.js",
+    "static/js/2.4b1bfc35.chunk.js.map": "/Monitoring-Prices/static/js/2.4b1bfc35.chunk.js.map",
+    "static/js/3.1ae67848.chunk.js": "/Monitoring-Prices/static/js/3.1ae67848.chunk.js",
+    "static/js/3.1ae67848.chunk.js.map": "/Monitoring-Prices/static/js/3.1ae67848.chunk.js.map",
+    "index.html": "/Monitoring-Prices/index.html",
+    "static/css/2.20aa2d7b.chunk.css.map": "/Monitoring-Prices/static/css/2.20aa2d7b.chunk.css.map",
+    "static/css/main.b74d77e8.chunk.css.map": "/Monitoring-Prices/static/css/main.b74d77e8.chunk.css.map",
+    "static/js/2.4b1bfc35.chunk.js.LICENSE.txt": "/Monitoring-Prices/static/js/2.4b1bfc35.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a3550d1f.js",
+    "static/css/2.20aa2d7b.chunk.css",
+    "static/js/2.4b1bfc35.chunk.js",
+    "static/css/main.b74d77e8.chunk.css",
+    "static/js/main.36989793.chunk.js"
+  ]
+}
