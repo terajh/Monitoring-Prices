@@ -5,15 +5,28 @@ const path = require('path');
 const compression = require('compression'); // 파일 압축 송수신
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const https = require('https');
+const http = require('http');
+const fs = require('fs');
 
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 var bgetHost = require('./lib/host');
 var hostname = bgetHost();
-console.log(hostname)
+
+var privateKey = fs.readFileSync("/etc/letsencrypt/live/joopi.cf/privkey.pem");
+var certificate = fs.readFileSync("/etc/letsencrypt/live/joopi.cf/cert.pem");
+var ca = fs.readFileSync("/etc/letsencrypt/live/joopi.cf/chain.pem");
+const credentials = {key:privateKey, cert:certificate, ca:ca};
+
 app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true
+	origin:[
+		"https://terajh.github.io/Monitoring-Prices/"
+	],
+	methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+	preflightContinue: false,
+	optionsSuccessStatus:204,
+    	credentials: true
 }));
 app.set('view engine', 'ejs')
 
@@ -61,7 +74,4 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
 });
 
-
-app.listen(3001,() => {
-    console.log('Nodejs server running on port 3001');
-})
+app.listen(3001,() => console.log('listening'));

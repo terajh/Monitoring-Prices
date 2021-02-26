@@ -14,9 +14,13 @@ module.exports = (passport) => {
     router.get('/session', (req, res) => {
         console.log('get auth',req.session.passport);
         if(req.session.passport.user === undefined) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "X-Requested-With");
             res.status(200).send({success:false});
         }
         else {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "X-Requested-With");
             res.status(200).send({success:true, data:req.session.passport.user});
         }
     });
